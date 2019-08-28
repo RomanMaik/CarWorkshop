@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using DAL.Interfaces;
+using Models;
 using Models.Dto;
 using Models.Enum;
 using System;
@@ -7,9 +8,14 @@ using System.Linq;
 
 namespace DAL.Repositories
 {
-    public class UserRepository : IBaseRepository<User>
+    public class UserRepository : IUserRepository
     {
-        private DbContext _carWorkshopContext;
+        private IDbContext _carWorkshopContext;
+
+        public UserRepository(IDbContext dbContext)
+        {
+            _carWorkshopContext = dbContext;
+        }
 
         public StatusDto Add(User model)
         {
@@ -36,6 +42,11 @@ namespace DAL.Repositories
         public List<User> GetAll()
         {
             return _carWorkshopContext.Users.Select(x => x.Value).ToList();
+        }
+
+        public List<User> List(Func<User, bool> predicate)
+        {
+            return _carWorkshopContext.Users.Select(x => x.Value).Where(predicate).ToList();
         }
 
         public void Update(User model)

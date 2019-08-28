@@ -5,16 +5,19 @@ namespace DAL
 {
     public class DbContext : IDbContext
     {
-        public Dictionary<string, User> Users { get; set; }
-
-        public Dictionary<string, CarWorkshop> Workshops { get; set; }
-
-        public Dictionary<KeyValuePair<string,string>, Appointment> Appointments { get; set; }
+        public Dictionary<string, User> Users { get ; set ; }
+        public Dictionary<string, CarWorkshop> Workshops { get ; set ; }
+        public Dictionary<KeyValuePair<string, string>, Appointment> Appointments { get ; set ; }
 
         public DbContext()
         {
+            Users = new Dictionary<string, User>();
+            Workshops = new Dictionary<string, CarWorkshop>();
+            Appointments = new Dictionary<KeyValuePair<string, string>, Appointment>();
+
             Seed();
         }
+
 
         private void Seed()
         {
